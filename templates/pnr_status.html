@@ -1,11 +1,48 @@
-{% extends 'base.html' %}
 
-{% block title %}PNR Status - Trainman{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNR Status - Trainman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <span class="logo-text">Trainman</span>
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="base.html">Home</a></li>
+                <li><a href="pnr_status.html">PNR Status</a></li>
+                <li><a href="seat_availability.html">Seat Availability</a></li>
+                
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+                
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Flash Messages -->
+    
+        
+    
+    
+    <!-- Main Content -->
+    <main>
+        
 <!-- PNR Header -->
 <section class="hero">
-    <div class="container">
+    <div class="container1">
         <h1>PNR Status</h1>
         <p>Check the current status of your booking</p>
     </div>
@@ -16,7 +53,7 @@
     <div class="pnr-container">
         <h2 class="pnr-heading">Check PNR Status</h2>
         
-        <form id="pnr-form" class="pnr-form" action="{{ url_for('check_pnr') }}" method="POST">
+        <form id="pnr-form" class="pnr-form" action="check_pnr.php" method="POST">
             <div class="pnr-input">
                 <input type="text" id="pnr-number" name="pnr" class="form-control" placeholder="Enter 10-digit PNR number" required>
                 <button type="submit" class="search-btn">
@@ -25,63 +62,7 @@
             </div>
         </form>
         
-        {% if pnr_data %}
-            <div class="pnr-result">
-                <h3>PNR Details: {{ pnr_data.pnr }}</h3>
-                
-                <div class="pnr-detail">
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">Train Number / Name</div>
-                        <div class="pnr-detail-value">{{ pnr_data.train_number }} / {{ pnr_data.train_name }}</div>
-                    </div>
-                    
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">From</div>
-                        <div class="pnr-detail-value">{{ pnr_data.from }}</div>
-                    </div>
-                    
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">To</div>
-                        <div class="pnr-detail-value">{{ pnr_data.to }}</div>
-                    </div>
-                    
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">Date of Journey</div>
-                        <div class="pnr-detail-value">{{ pnr_data.date }}</div>
-                    </div>
-                    
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">Class</div>
-                        <div class="pnr-detail-value">{{ pnr_data.class }}</div>
-                    </div>
-                    
-                    <div class="pnr-detail-item">
-                        <div class="pnr-detail-label">Current Status</div>
-                        <div class="pnr-detail-value">{{ pnr_data.status }}</div>
-                    </div>
-                </div>
-                
-                <h3>Passenger Details</h3>
-                <table class="passenger-table">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Booking Status</th>
-                            <th>Current Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for passenger in pnr_data.passengers %}
-                            <tr>
-                                <td>{{ passenger.no }}</td>
-                                <td>{{ passenger.booking_status }}</td>
-                                <td>{{ passenger.current_status }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
+        
             <div class="pnr-info">
                 <h3>How to Check PNR Status</h3>
                 <ul>
@@ -94,7 +75,64 @@
                     <p><strong>Note:</strong> PNR number can be found on the top left corner of your ticket.</p>
                 </div>
             </div>
-        {% endif %}
+        
     </div>
 </div>
-{% endblock %}
+
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Trainman</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Agent Login</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Train Running Status</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Timetable</a></li>
+                        <li><a href="#">Seat Availability</a></li>
+                        <li><a href="#">Train Between Stations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Customer Support</a></li>
+                        <li><a href="#">Site Map</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect with Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GoRails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+    
+</body>
+</html>

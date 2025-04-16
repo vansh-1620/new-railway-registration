@@ -1,11 +1,48 @@
-{% extends 'base.html' %}
 
-{% block title %}Seat Availability - Trainman{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Availability - Trainman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <span class="logo-text">Trainman</span>
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="base.html">Home</a></li>
+                <li><a href="pnr_status.html">PNR Status</a></li>
+                <li><a href="seat_availability.html">Seat Availability</a></li>
+                
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+                
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Flash Messages -->
+    
+        
+    
+    
+    <!-- Main Content -->
+    <main>
+        
 <!-- Seat Availability Header -->
 <section class="hero">
-    <div class="container">
+    <div class="container1">
         <h1>Seat Availability</h1>
         <p>Check seat availability before booking your ticket</p>
     </div>
@@ -16,26 +53,26 @@
     <div class="availability-container">
         <h2 class="availability-heading">Check Seat Availability</h2>
         
-        <form id="availability-form" class="availability-form" action="{{ url_for('check_availability') }}" method="POST">
+        <form id="availability-form" class="availability-form" action="/check_availability" method="POST">
             <div class="form-row">
                 <div class="form-group">
                     <label for="train-number">Train Number</label>
-                    <input type="text" id="train-number" name="train_number" class="form-control" value="{{ train.number if train else '' }}" placeholder="Enter train number" required>
+                    <input type="text" id="train-number" name="train_number" class="form-control" value="" placeholder="Enter train number" required>
                 </div>
                 <div class="form-group">
                     <label for="from-station">From</label>
-                    <input type="text" id="from-station" name="from_station" class="form-control station-input" value="{{ from_station if from_station else '' }}" placeholder="Enter source station" required>
+                    <input type="text" id="from-station" name="from_station" class="form-control station-input" value="" placeholder="Enter source station" required>
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label for="to-station">To</label>
-                    <input type="text" id="to-station" name="to_station" class="form-control station-input" value="{{ to_station if to_station else '' }}" placeholder="Enter destination station" required>
+                    <input type="text" id="to-station" name="to_station" class="form-control station-input" value="" placeholder="Enter destination station" required>
                 </div>
                 <div class="form-group">
                     <label for="travel-date">Date</label>
-                    <input type="date" id="travel-date" name="date" class="form-control" value="{{ date if date else '' }}" required>
+                    <input type="date" id="travel-date" name="date" class="form-control" value="" required>
                 </div>
             </div>
             
@@ -43,12 +80,12 @@
                 <div class="form-group">
                     <label for="travel-class">Class</label>
                     <select id="travel-class" name="class" class="form-control" required>
-                        <option value="SL" {% if train_class == 'SL' %}selected{% endif %}>Sleeper (SL)</option>
-                        <option value="3A" {% if train_class == '3A' %}selected{% endif %}>AC 3 Tier (3A)</option>
-                        <option value="2A" {% if train_class == '2A' %}selected{% endif %}>AC 2 Tier (2A)</option>
-                        <option value="1A" {% if train_class == '1A' %}selected{% endif %}>AC First Class (1A)</option>
-                        <option value="CC" {% if train_class == 'CC' %}selected{% endif %}>Chair Car (CC)</option>
-                        <option value="EC" {% if train_class == 'EC' %}selected{% endif %}>Executive Chair Car (EC)</option>
+                        <option value="SL" selected>Sleeper (SL)</option>
+                        <option value="3A" >AC 3 Tier (3A)</option>
+                        <option value="2A" >AC 2 Tier (2A)</option>
+                        <option value="1A" >AC First Class (1A)</option>
+                        <option value="CC" >Chair Car (CC)</option>
+                        <option value="EC" >Executive Chair Car (EC)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -60,54 +97,7 @@
             </div>
         </form>
         
-        {% if availability %}
-            <div class="availability-result">
-                <h3>Seat Availability for {% if train %}{{ train.name }} ({{ train.number }}){% else %}Train{% endif %}</h3>
-                <h4>{{ from_station }} to {{ to_station }} | Class: {{ train_class }}</h4>
-                
-                <table class="availability-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Fare</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in availability %}
-                            <tr>
-                                <td>{{ item.date }}</td>
-                                <td class="availability-status 
-                                    {% if 'AVAILABLE' in item.status %}status-available
-                                    {% elif 'RAC' in item.status %}status-rac
-                                    {% elif 'WL' in item.status %}status-wl{% endif %}">
-                                    {{ item.status }}
-                                </td>
-                                <td>{{ item.fare }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                
-                <div class="availability-note">
-                    <p><strong>Note:</strong> Availability shown is subject to the current reservation system status and may change.</p>
-                </div>
-            </div>
-        {% elif train %}
-            <div class="train-info-section">
-                <h3>Train Information</h3>
-                <div class="train-detail">
-                    <div class="train-name">{{ train.name }}</div>
-                    <div class="train-number">Train #{{ train.number }}</div>
-                    <div class="train-route">{{ train.from }} - {{ train.to }}</div>
-                    <div class="train-time">{{ train.departure }} - {{ train.arrival }} ({{ train.duration }})</div>
-                </div>
-                
-                <p class="availability-prompt">
-                    Please fill in the form above and click "Check Availability" to see seat availability for this train.
-                </p>
-            </div>
-        {% else %}
+        
             <div class="availability-info">
                 <h3>How to Check Seat Availability</h3>
                 <ul>
@@ -123,7 +113,64 @@
                     <p><span class="status-wl">WL-XX</span> - Waitlist, XX passengers in waiting</p>
                 </div>
             </div>
-        {% endif %}
+        
     </div>
 </div>
-{% endblock %}
+
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Trainman</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Agent Login</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Train Running Status</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Timetable</a></li>
+                        <li><a href="#">Seat Availability</a></li>
+                        <li><a href="#">Train Between Stations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Customer Support</a></li>
+                        <li><a href="#">Site Map</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect with Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GoRails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+    
+</body>
+</html>

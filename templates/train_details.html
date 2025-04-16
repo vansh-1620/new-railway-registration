@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ train.name }} ({{ train.number }}) - Trainman{% endblock %}
+
+{% block content %}
+<!-- Train Detail Header -->
+<section class="hero">
+    <div class="container">
+        <h1>{{ train.name }} ({{ train.number }})</h1>
+        <p>{{ train.from }} to {{ train.to }} | {{ train.duration }}</p>
+    </div>
+</section>
+
+<!-- Train Details Section -->
+<div class="container">
+    <div class="train-detail-container">
+        <div class="train-title">
+            <div class="train-title-left">
+                <h2>{{ train.name }}</h2>
+                <p>{{ train.from }} - {{ train.to }}</p>
+            </div>
+            <div class="train-title-right">
+                <div class="train-number">Train #{{ train.number }}</div>
+                <div class="rating">★ {{ train.rating }}/5</div>
+            </div>
+        </div>
+        
+        <div class="train-journey-info">
+            <div class="station-info departure">
+                <div class="station-name">{{ station_names[train.from] }} ({{ train.from }})</div>
+                <div class="station-time">{{ train.departure }}</div>
+                <div class="journey-duration">Departure</div>
+            </div>
+            
+            <div class="journey-time">
+                <div class="journey-duration-info">
+                    <i class="fas fa-clock"></i> {{ train.duration }}
+                </div>
+                <div class="journey-distance">
+                    <i class="fas fa-route"></i> {{ train.distance }}
+                </div>
+            </div>
+            
+            <div class="station-info arrival">
+                <div class="station-name">{{ station_names[train.to] }} ({{ train.to }})</div>
+                <div class="station-time">{{ train.arrival }}</div>
+                <div class="journey-duration">Arrival</div>
+            </div>
+        </div>
+        
+        <div class="train-classes-container">
+            <h3>Available Classes</h3>
+            <div class="train-classes">
+                {% for class in train.classes %}
+                    <div class="train-class">{{ class }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="train-days-container">
+            <h3>Runs On</h3>
+            <div class="train-days">
+                {% for day in train.days %}
+                    <div class="train-day">{{ day }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="train-schedule">
+            <h3 class="schedule-heading">Train Schedule</h3>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Station</th>
+                        <th>Code</th>
+                        <th>Arrival</th>
+                        <th>Departure</th>
+                        <th>Stop Time</th>
+                        <th>Day</th>
+                        <th>Distance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i, station_code in enumerate(train.route) %}
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ station_names.get(station_code, station_code) }}</td>
+                            <td>{{ station_code }}</td>
+                            {% if i == 0 %}
+                                <td>-</td>
+                                <td>{{ train.departure }}</td>
+                                <td>-</td>
+                                <td>1</td>
+                                <td>0 km</td>
+                            {% elif i == train.route|length - 1 %}
+                                <td>{{ train.arrival }}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>{% if train.duration|int > 24 %}2{% else %}1{% endif %}</td>
+                                <td>{{ train.distance }}</td>
+                            {% else %}
+                                <td>--:--</td>
+                                <td>--:--</td>
+                                <td>2 min</td>
+                                <td>{% if i > (train.route|length // 2) and train.duration|int > 24 %}2{% else %}1{% endif %}</td>
+                                <td>{{ (train.distance|int * i / (train.route|length - 1))|int }} km</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="train-actions-container">
+            <h3>Quick Actions</h3>
+            <div class="train-actions">
+                <a href="{{ url_for('seat_availability') }}?train={{ train.number }}&from={{ train.from }}&to={{ train.to }}" class="view-btn">
+                    <i class="fas fa-chair"></i> Check Seat Availability
+                </a>
+                <a href="{{ url_for('pnr_status') }}" class="view-btn">
+                    <i class="fas fa-ticket-alt"></i> PNR Status
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

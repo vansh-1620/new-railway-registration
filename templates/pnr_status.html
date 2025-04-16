@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}PNR Status - Trainman{% endblock %}
+
+{% block content %}
+<!-- PNR Header -->
+<section class="hero">
+    <div class="container">
+        <h1>PNR Status</h1>
+        <p>Check the current status of your booking</p>
+    </div>
+</section>
+
+<!-- PNR Search Container -->
+<div class="container">
+    <div class="pnr-container">
+        <h2 class="pnr-heading">Check PNR Status</h2>
+        
+        <form id="pnr-form" class="pnr-form" action="{{ url_for('check_pnr') }}" method="POST">
+            <div class="pnr-input">
+                <input type="text" id="pnr-number" name="pnr" class="form-control" placeholder="Enter 10-digit PNR number" required>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Check Status
+                </button>
+            </div>
+        </form>
+        
+        {% if pnr_data %}
+            <div class="pnr-result">
+                <h3>PNR Details: {{ pnr_data.pnr }}</h3>
+                
+                <div class="pnr-detail">
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">Train Number / Name</div>
+                        <div class="pnr-detail-value">{{ pnr_data.train_number }} / {{ pnr_data.train_name }}</div>
+                    </div>
+                    
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">From</div>
+                        <div class="pnr-detail-value">{{ pnr_data.from }}</div>
+                    </div>
+                    
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">To</div>
+                        <div class="pnr-detail-value">{{ pnr_data.to }}</div>
+                    </div>
+                    
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">Date of Journey</div>
+                        <div class="pnr-detail-value">{{ pnr_data.date }}</div>
+                    </div>
+                    
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">Class</div>
+                        <div class="pnr-detail-value">{{ pnr_data.class }}</div>
+                    </div>
+                    
+                    <div class="pnr-detail-item">
+                        <div class="pnr-detail-label">Current Status</div>
+                        <div class="pnr-detail-value">{{ pnr_data.status }}</div>
+                    </div>
+                </div>
+                
+                <h3>Passenger Details</h3>
+                <table class="passenger-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Booking Status</th>
+                            <th>Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for passenger in pnr_data.passengers %}
+                            <tr>
+                                <td>{{ passenger.no }}</td>
+                                <td>{{ passenger.booking_status }}</td>
+                                <td>{{ passenger.current_status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="pnr-info">
+                <h3>How to Check PNR Status</h3>
+                <ul>
+                    <li>Enter your 10-digit PNR number in the input field above</li>
+                    <li>Click on "Check Status" button</li>
+                    <li>View your current PNR status and passenger details</li>
+                </ul>
+                
+                <div class="pnr-note">
+                    <p><strong>Note:</strong> PNR number can be found on the top left corner of your ticket.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

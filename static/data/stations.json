@@ -1,0 +1,122 @@
+[
+  {
+    "code": "NDLS",
+    "name": "New Delhi"
+  },
+  {
+    "code": "MMCT",
+    "name": "Mumbai Central"
+  },
+  {
+    "code": "HWH",
+    "name": "Howrah Junction"
+  },
+  {
+    "code": "SBC",
+    "name": "KSR Bengaluru"
+  },
+  {
+    "code": "MAS",
+    "name": "Chennai Central"
+  },
+  {
+    "code": "CNB",
+    "name": "Kanpur Central"
+  },
+  {
+    "code": "LKO",
+    "name": "Lucknow"
+  },
+  {
+    "code": "PNBE",
+    "name": "Patna Junction"
+  },
+  {
+    "code": "RJPB",
+    "name": "Rajendra Nagar Terminal"
+  },
+  {
+    "code": "ASR",
+    "name": "Amritsar Junction"
+  },
+  {
+    "code": "JP",
+    "name": "Jaipur Junction"
+  },
+  {
+    "code": "AII",
+    "name": "Ajmer Junction"
+  },
+  {
+    "code": "BRC",
+    "name": "Vadodara Junction"
+  },
+  {
+    "code": "ANVT",
+    "name": "Anand Vihar Terminal"
+  },
+  {
+    "code": "SDAH",
+    "name": "Sealdah"
+  },
+  {
+    "code": "GHY",
+    "name": "Guwahati"
+  },
+  {
+    "code": "BBS",
+    "name": "Bhubaneswar"
+  },
+  {
+    "code": "BSB",
+    "name": "Varanasi Junction"
+  },
+  {
+    "code": "MTJ",
+    "name": "Mathura Junction"
+  },
+  {
+    "code": "KOTA",
+    "name": "Kota Junction"
+  },
+  {
+    "code": "RTM",
+    "name": "Ratlam Junction"
+  },
+  {
+    "code": "BVI",
+    "name": "Borivali"
+  },
+  {
+    "code": "ST",
+    "name": "Surat"
+  },
+  {
+    "code": "BL",
+    "name": "Valsad"
+  },
+  {
+    "code": "MGS",
+    "name": "Mughal Sarai Junction"
+  },
+  {
+    "code": "DDU",
+    "name": "Pt. Deen Dayal Upadhyaya Junction"
+  },
+  {
+    "code": "ARA",
+    "name": "Ara"
+  },
+  {
+    "code": "GMO",
+    "name": "Gomo"
+  },
+  {
+    "code": "DHN",
+    "name": "Dhanbad Junction"
+  },
+  {
+    "code": "ASN",
+    "name": "Asansol Junction"
+  }
+]

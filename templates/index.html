@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Trainman - Book Train Tickets Online{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Book Train Tickets Online</h1>
+        <p>Search, check availability, and get the best deals on train tickets across India</p>
+    </div>
+</section>
+
+<!-- Search Container -->
+<div class="container">
+    <div class="search-container">
+        <div class="search-tabs">
+            <button class="search-tab active" data-target="train-search-form">Search Trains</button>
+            <button class="search-tab" data-target="pnr-search-form">PNR Status</button>
+            <button class="search-tab" data-target="availability-search-form">Seat Availability</button>
+        </div>
+        
+        <!-- Train Search Form -->
+        <form id="train-search-form" class="search-form" action="" method="GET">
+            <div class="form-group">
+                <label for="from-station">From</label>
+                <input type="text" id="from-station" name="from" class="form-control station-input" placeholder="Enter source station" required>
+            </div>
+            <div class="form-group">
+                <label for="to-station">To</label>
+                <input type="text" id="to-station" name="to" class="form-control station-input" placeholder="Enter destination station" required>
+            </div>
+            <div class="form-group">
+                <label for="travel-date">Date</label>
+                <input type="date" id="travel-date" name="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Search Trains
+                </button>
+            </div>
+        </form>
+        
+        <!-- PNR Search Form -->
+        <form id="pnr-search-form" class="search-form" action="{{ url_for('check_pnr') }}" method="POST" style="display: none;">
+            <div class="form-group">
+                <label for="pnr-number">PNR Number</label>
+                <input type="text" id="pnr-number" name="pnr" class="form-control" placeholder="Enter 10-digit PNR number" required>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Check PNR Status
+                </button>
+            </div>
+        </form>
+        
+        <!-- Availability Search Form -->
+        <form id="availability-search-form" class="search-form" action="{{ url_for('check_availability') }}" method="POST" style="display: none;">
+            <div class="form-group">
+                <label for="train-number">Train Number</label>
+                <input type="text" id="train-number" name="train_number" class="form-control" placeholder="Enter train number" required>
+            </div>
+            <div class="form-group">
+                <label for="from-station-avail">From</label>
+                <input type="text" id="from-station-avail" name="from_station" class="form-control station-input" placeholder="Enter source station" required>
+            </div>
+            <div class="form-group">
+                <label for="to-station-avail">To</label>
+                <input type="text" id="to-station-avail" name="to_station" class="form-control station-input" placeholder="Enter destination station" required>
+            </div>
+            <div class="form-group">
+                <label for="travel-date-avail">Date</label>
+                <input type="date" id="travel-date-avail" name="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="travel-class">Class</label>
+                <select id="travel-class" name="class" class="form-control" required>
+                    <option value="SL">Sleeper (SL)</option>
+                    <option value="3A">AC 3 Tier (3A)</option>
+                    <option value="2A">AC 2 Tier (2A)</option>
+                    <option value="1A">AC First Class (1A)</option>
+                    <option value="CC">Chair Car (CC)</option>
+                    <option value="EC">Executive Chair Car (EC)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Check Availability
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="features-heading">
+            <h2>Why Choose Trainman?</h2>
+            <p>Get the best experience for booking train tickets with our user-friendly platform</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="feature-title">Easy Train Search</h3>
+                <p class="feature-description">Find the best train options between any stations across India with our simple search interface.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <h3 class="feature-title">PNR Status Check</h3>
+                <p class="feature-description">Instantly check the current status of your PNR and get real-time updates on your booking.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chair"></i>
+                </div>
+                <h3 class="feature-title">Seat Availability</h3>
+                <p class="feature-description">Check seat availability for your preferred train, class, and date before making a booking.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <h3 class="feature-title">Train Route Information</h3>
+                <p class="feature-description">Get detailed information about train routes, including all stops and arrival/departure times.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="feature-title">Live Train Status</h3>
+                <p class="feature-description">Track the current position and running status of any train with just a few clicks.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">24/7 Support</h3>
+                <p class="feature-description">Our customer support team is available round the clock to assist you with any issues.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

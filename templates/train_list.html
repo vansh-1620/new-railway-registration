@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Train Search Results - Trainman{% endblock %}
+
+{% block content %}
+<!-- Search Results Header -->
+<section class="hero">
+    <div class="container">
+        <h1>Trains from {{ from_station }} to {{ to_station }}</h1>
+        <p>{{ date }} | {{ trains|length }} Trains Found</p>
+    </div>
+</section>
+<link rel="stylesheet" href="/static/css/style.css">
+<!-- Search Form Mini -->
+<div class="container">
+    <div class="search-container">
+        <form id="train-search-form" class="search-form" action="train_details.html" method="GET">
+            <div class="form-group">
+                <label for="from-station">From</label>
+                <input type="text" id="from-station" name="from" class="form-control station-input" value="{{ from_station }}" required>
+            </div>
+            <div class="form-group">
+                <label for="to-station">To</label>
+                <input type="text" id="to-station" name="to" class="form-control station-input" value="{{ to_station }}" required>
+            </div>
+            <div class="form-group">
+                <label for="travel-date">Date</label>
+                <input type="date" id="travel-date" name="date" class="form-control" value="{{ date }}" required>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Modify Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Train List -->
+<div class="container">
+    <div class="train-list">
+        {% if trains %}
+            {% for train in trains %}
+                <div class="train-card">
+                    <div class="train-header">
+                        <div class="train-name">{{ train.name }}</div>
+                        <div class="train-number">#{{ train.number }}</div>
+                    </div>
+                    <div class="train-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Departure</span>
+                            <span class="detail-value">{{ train.departure }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Arrival</span>
+                            <span class="detail-value">{{ train.arrival }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duration</span>
+                            <span class="detail-value">{{ train.duration }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Distance</span>
+                            <span class="detail-value">{{ train.distance }}</span>
+                        </div>
+                    </div>
+                    <div class="train-footer">
+                        <div class="train-classes">
+                            {% for class in train.classes %}
+                                <span class="train-class">{{ class }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="train-actions">
+                            <a href="train_details.html" class="view-btn">
+                                <i class="fas fa-info-circle"></i> Details
+                            </a>
+                            <a href="seat_availability.html" class="view-btn">
+                                <i class="fas fa-chair"></i> Availability
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <h2>No trains found</h2>
+                <p>No trains were found for your search criteria. Please try different stations or dates.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<script src="/static/data/trains.json"></script>
+{% endblock %}
